@@ -1,0 +1,5 @@
+cmake_minimum_required(VERSION 3.10)
+project(todo)
+include_directories("${CMAKE_SOURCE_DIR}/Include")
+file(GLOB SOURCES "Source/*.cpp")
+add_executable(${PROJECT_NAME} ${SOURCES})

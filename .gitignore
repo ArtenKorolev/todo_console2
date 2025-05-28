@@ -2,3 +2,8 @@ Build/
 Bin/
 build/
 bin/
+.vscode/
+.idea/
+.cache/
+.DS_Store
+*.swp

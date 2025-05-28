@@ -6,8 +6,8 @@
 class FileTaskRepository : public TaskRepository
 {
    public:
-    FileTaskRepository() = default;
-    ~FileTaskRepository() override = default;
+    FileTaskRepository();
+    ~FileTaskRepository() override;
 
     FileTaskRepository(const FileTaskRepository&) = delete;
     auto operator=(const FileTaskRepository&) -> FileTaskRepository& = delete;
@@ -19,9 +19,13 @@ class FileTaskRepository : public TaskRepository
     [[nodiscard]] auto getAllTasks() const -> std::vector<ExistingTask> override;
 
    private:
+    static std::uint64_t _lastId;
     std::vector<ExistingTask> _inMemoryTasks;
 
-    auto _getNewId() const -> std::uint64_t;
+    void _getLastIdFromTasks();
+    static auto _getNewId() -> std::uint64_t;
+    void _loadTasksFromFile();
+    void _saveTasksToFile() const;
 };
 
 #endif  // _FILE_TASK_REPOSITORY_HPP_

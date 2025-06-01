@@ -18,6 +18,8 @@ struct ExistingTask
     ExistingTask() = default;
     ExistingTask(std::uint64_t taskId, TaskData &&taskData);
 
+    auto getInfo() const -> std::string;
+
     std::uint64_t id{};
     TaskData taskData;
 };

@@ -9,15 +9,17 @@ include_directories(
     "${CMAKE_SOURCE_DIR}/code/entities"
     "${CMAKE_SOURCE_DIR}/code/config"
     "${CMAKE_SOURCE_DIR}/code/json_serialization"
+    "${CMAKE_SOURCE_DIR}/code/console_ui"
 )
 
 # sources
 file(
     GLOB SOURCES 
-    "code/entities"
-    "code/repository"
-    "code/config"
-    "code/json_serialiaztion"
+    "code/entities/*.cpp"
+    "code/repository/*.cpp"
+    "code/config/*.cpp"
+    "code/console_ui/*.cpp"
+    "code/json_serialization/*.cpp"
     "code/main.cpp"
 )
 

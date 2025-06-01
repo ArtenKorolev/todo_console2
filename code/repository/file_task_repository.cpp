@@ -1,11 +1,10 @@
-#include "FileTaskRepository.hpp"
+#include "file_task_repository.hpp"
 
 #include <algorithm>
 #include <fstream>
 
-#include "Config.hpp"
-#include "JsonSerialization.hpp"
-#include "Task.hpp"
+#include "config.hpp"
+#include "json_serialization.hpp"
 
 std::uint64_t FileTaskRepository::_lastId = 0;
 
@@ -39,12 +38,12 @@ auto FileTaskRepository::_getNewId() -> std::uint64_t { return ++FileTaskReposit
 
 void FileTaskRepository::removeTask(std::uint64_t idToRemove)
 {
-    auto removeIterator = std::find_if(_inMemoryTasks.begin(), _inMemoryTasks.end(),
-                           [idToRemove](const ExistingTask& task) {
-                               return task.id == idToRemove;
-                           });
+    auto removeIterator =
+        std::find_if(_inMemoryTasks.begin(), _inMemoryTasks.end(),
+                     [idToRemove](const ExistingTask& task) { return task.id == idToRemove; });
 
-    if (removeIterator == _inMemoryTasks.end()) {
+    if (removeIterator == _inMemoryTasks.end())
+    {
         throw std::runtime_error("Task with given ID not found");
     }
 

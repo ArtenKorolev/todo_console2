@@ -8,7 +8,7 @@ include_directories(
     "${CMAKE_SOURCE_DIR}/code/repository"
     "${CMAKE_SOURCE_DIR}/code/entities"
     "${CMAKE_SOURCE_DIR}/code/config"
-    "${CMAKE_SOURCE_DIR}/code/json_serialiaztion"
+    "${CMAKE_SOURCE_DIR}/code/json_serialization"
 )
 
 # sources

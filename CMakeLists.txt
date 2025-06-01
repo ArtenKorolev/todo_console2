@@ -17,7 +17,6 @@ file(
     GLOB SOURCES 
     "code/entities/*.cpp"
     "code/repository/*.cpp"
-    "code/config/*.cpp"
     "code/console_ui/*.cpp"
     "code/json_serialization/*.cpp"
     "code/main.cpp"

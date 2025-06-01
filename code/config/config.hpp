@@ -1,8 +1,6 @@
 #ifndef _CONFIG_HPP_
 #define _CONFIG_HPP_
 
-#include <string>
-
 class Config
 {
    public:
@@ -14,10 +12,7 @@ class Config
     Config(Config&&) = delete;
     auto operator=(Config&&) -> Config& = delete;
 
-    [[nodiscard]] static auto getTasksFilePath() -> std::string;
-
-   private:
-    static constexpr auto _tasksFilePath = "tasks.json";
+    static constexpr auto tasksFilePath = "tasks.json";
 };
 
 #endif  // _CONFIG_HPP_

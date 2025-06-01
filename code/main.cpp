@@ -1,7 +1,18 @@
+#include <exception>
+#include <iostream>
+
 #include "console_ui.hpp"
 
 auto main() -> int
 {
-    ConsoleUI::run();
-    return 0;
+    try
+    {
+        ConsoleUI::run();
+        return 0;
+    }
+    catch (const std::exception &exception)
+    {
+        std::cerr << "Error: " << exception.what() << '\n';
+        return 1;
+    }
 }

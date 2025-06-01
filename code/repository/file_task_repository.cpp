@@ -16,7 +16,7 @@ FileTaskRepository::FileTaskRepository()
     _getLastIdFromTasks();
 }
 
-void FileTaskRepository::_getLastIdFromTasks()
+void FileTaskRepository::_getLastIdFromTasks() noexcept
 {
     std::uint64_t lastId = 0;
 
@@ -36,7 +36,10 @@ void FileTaskRepository::addTask(TaskData&& newTask)
     _inMemoryTasks.emplace_back(std::move(taskToAdd));
 }
 
-auto FileTaskRepository::_getNewId() -> std::uint64_t { return ++FileTaskRepository::_lastId; }
+auto FileTaskRepository::_getNewId() noexcept -> std::uint64_t
+{
+    return ++FileTaskRepository::_lastId;
+}
 
 void FileTaskRepository::removeTask(std::uint64_t idToRemove)
 {
@@ -52,14 +55,15 @@ void FileTaskRepository::removeTask(std::uint64_t idToRemove)
     _inMemoryTasks.erase(removeIterator);
 }
 
-[[nodiscard]] auto FileTaskRepository::getAllTasks() const -> const std::vector<ExistingTask>&
+[[nodiscard]] auto FileTaskRepository::getAllTasks() const noexcept
+    -> const std::vector<ExistingTask>&
 {
     return _inMemoryTasks;
 }
 
 void FileTaskRepository::_loadTasksFromFile()
 {
-    std::ifstream file((Config::getTasksFilePath()));
+    std::ifstream file((Config::tasksFilePath));
 
     if (file.is_open())
     {
@@ -72,7 +76,7 @@ void FileTaskRepository::_loadTasksFromFile()
 
 void FileTaskRepository::_saveTasksToFile() const
 {
-    std::ofstream file(Config::getTasksFilePath());
+    std::ofstream file(Config::tasksFilePath);
 
     if (file.is_open())
     {

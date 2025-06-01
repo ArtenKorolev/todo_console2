@@ -18,7 +18,7 @@ class TaskRepository
 
     virtual void addTask(TaskData&& newTask) = 0;
     virtual void removeTask(std::uint64_t idToRemove) = 0;
-    [[nodiscard]] virtual auto getAllTasks() const -> std::vector<ExistingTask> = 0;
+    [[nodiscard]] virtual auto getAllTasks() const -> const std::vector<ExistingTask>& = 0;
 };
 
 #endif  // _TASK_REPOSITORY_HPP_

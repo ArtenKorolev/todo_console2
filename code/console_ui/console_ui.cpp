@@ -6,7 +6,7 @@
 
 void ConsoleUI::run()
 {
-    std::cout << "Welcome to TODO programm!\n";
+    std::cout << "Welcome to TODO program!\n";
 
     bool isActive = true;
 
@@ -32,10 +32,31 @@ void ConsoleUI::_handleInput(const std::string &input)
 
     if (input == "1")
     {
+        std::cout << "Active tasks: \n";
         auto tasks = tasksRepo.getAllTasks();
 
         for (const auto &task : tasks)
         {
+            if (task.taskData.completed)
+            {
+                continue;
+            }
+            std::cout << "--------------------------\n";
+            std::cout << task.getInfo() << '\n';
+            std::cout << "--------------------------\n";
+        }
+    }
+    else if (input == "2")
+    {
+        std::cout << "Completed tasks: \n";
+        auto tasks = tasksRepo.getAllTasks();
+
+        for (const auto &task : tasks)
+        {
+            if (!(task.taskData.completed))
+            {
+                continue;
+            }
             std::cout << "--------------------------\n";
             std::cout << task.getInfo() << '\n';
             std::cout << "--------------------------\n";
@@ -53,6 +74,10 @@ void ConsoleUI::_handleInput(const std::string &input)
 
         TaskData newTaskData(std::move(title), std::move(description));
         tasksRepo.addTask(std::move(newTaskData));
+    }
+    else
+    {
+        std::cerr << "Unknown command!\n";
     }
 }
 

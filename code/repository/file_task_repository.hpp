@@ -1,6 +1,9 @@
 #ifndef _FILE_TASK_REPOSITORY_HPP_
 #define _FILE_TASK_REPOSITORY_HPP_
 
+#include <vector>
+
+#include "task.hpp"
 #include "task_repository.hpp"
 
 class FileTaskRepository : public TaskRepository
@@ -16,7 +19,7 @@ class FileTaskRepository : public TaskRepository
 
     void addTask(TaskData&& newTask) override;
     void removeTask(std::uint64_t idToRemove) override;
-    [[nodiscard]] auto getAllTasks() const -> std::vector<ExistingTask> override;
+    [[nodiscard]] auto getAllTasks() const -> const std::vector<ExistingTask>& override;
 
    private:
     static std::uint64_t _lastId;

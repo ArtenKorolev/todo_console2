@@ -2,9 +2,11 @@
 
 #include <algorithm>
 #include <fstream>
+#include <vector>
 
 #include "config.hpp"
 #include "json_serialization.hpp"
+#include "task.hpp"
 
 std::uint64_t FileTaskRepository::_lastId = 0;
 
@@ -50,7 +52,7 @@ void FileTaskRepository::removeTask(std::uint64_t idToRemove)
     _inMemoryTasks.erase(removeIterator);
 }
 
-[[nodiscard]] auto FileTaskRepository::getAllTasks() const -> std::vector<ExistingTask>
+[[nodiscard]] auto FileTaskRepository::getAllTasks() const -> const std::vector<ExistingTask>&
 {
     return _inMemoryTasks;
 }

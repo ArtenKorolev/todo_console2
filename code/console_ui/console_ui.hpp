@@ -1,17 +1,32 @@
 #ifndef _CONSOLE_UI_HPP_
 #define _CONSOLE_UI_HPP_
 
+#include <functional>
+#include <memory>
 #include <string>
+#include <unordered_map>
+
+#include "task.hpp"
+#include "task_repository.hpp"
 
 class ConsoleUI
 {
    public:
-    static void run();
+    explicit ConsoleUI(std::unique_ptr<TaskRepository> tasksRepository);
+    void run();
 
    private:
-    static void _userInput(std::string &buffer);
+    void _initializeCommands();
+    void _printTasks(bool completed);
+    static void _printTaskInfo(const ExistingTask& task);
+    void _addANewTask();
+    static void _quit();
+    void _userInput();
     static void _printOptions();
-    static void _handleInput(const std::string &input);
+
+    std::string _inputBuffer;
+    std::unique_ptr<TaskRepository> _tasksRepository;
+    std::unordered_map<std::string, std::function<void()>> _commands;
 };
 
 #endif  // _CONSOLE_UI_HPP_

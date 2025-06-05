@@ -26,7 +26,7 @@ class FileTaskRepository : public TaskRepository
     std::vector<ExistingTask> _inMemoryTasks;
 
     void _getLastIdFromTasks() noexcept;
-    static auto _getNewId() noexcept -> std::uint64_t;
+    [[nodiscard]] static auto _getNewId() noexcept -> std::uint64_t;
     void _loadTasksFromFile();
     void _saveTasksToFile() const;
 };

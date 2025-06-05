@@ -1,4 +1,5 @@
 #include "task.hpp"
+
 #include <string>
 
 TaskData::TaskData(std::string &&title, std::string &&description, bool completed)
@@ -13,5 +14,7 @@ ExistingTask::ExistingTask(std::uint64_t taskId, TaskData &&taskData)
 
 auto ExistingTask::getInfo() const -> std::string
 {
-    return "ID:" + std::to_string(id) + "\nTitle: " + taskData.title + "\nDescription: " + taskData.description + "\nCompleted: " + (taskData.completed ? "Yes" : "No");
+    return "ID:" + std::to_string(id) + "\nTitle: " + taskData.title +
+           "\nDescription: " + taskData.description +
+           "\nCompleted: " + (taskData.completed ? "Yes" : "No");
 }

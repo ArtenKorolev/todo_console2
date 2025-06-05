@@ -36,7 +36,7 @@ void FileTaskRepository::addTask(TaskData&& newTask)
     _inMemoryTasks.emplace_back(std::move(taskToAdd));
 }
 
-auto FileTaskRepository::_getNewId() noexcept -> std::uint64_t
+[[nodiscard]] auto FileTaskRepository::_getNewId() noexcept -> std::uint64_t
 {
     return ++FileTaskRepository::_lastId;
 }

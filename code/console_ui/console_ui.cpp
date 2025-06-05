@@ -2,89 +2,87 @@
 
 #include <iostream>
 
-#include "file_task_repository.hpp"
+ConsoleUI::ConsoleUI(std::unique_ptr<TaskRepository> tasksRepository)
+    : _tasksRepository(std::move(tasksRepository))
+{
+}
 
 void ConsoleUI::run()
 {
     std::cout << "Welcome to TODO program!\n";
 
-    bool isActive = true;
+    _initializeCommands();
 
-    std::string userInput;
-
-    while (isActive)
+    while (true)
     {
         _printOptions();
-        _userInput(userInput);
+        _userInput();
 
-        if (userInput == "q")
+        auto command = _commands.find(_inputBuffer);
+        std::cout << "\033[2J\033[1;1H"; 
+        if (command != _commands.end())
         {
-            break;
+            command->second();
         }
-
-        _handleInput(userInput);
+        else
+        {
+            std::cerr << "Unknown command!\n";
+        }
     }
 }
 
-void ConsoleUI::_handleInput(const std::string &input)
+void ConsoleUI::_initializeCommands()
 {
-    FileTaskRepository tasksRepo;
+    _commands = {{"1", [this] { _printTasks(false); }},
+                 {"2", [this] { _printTasks(true); }},
+                 {"3", [this] { _addANewTask(); }},
+                 {"q", [this] { _quit(); }}};
+}
 
-    if (input == "1")
+void ConsoleUI::_printTasks(bool completed)
+{
+    std::cout << (completed ? "Completed tasks:\n" : "Active tasks:\n");
+    const auto& tasks = _tasksRepository->getAllTasks();
+
+    for (const auto& task : tasks)
     {
-        std::cout << "Active tasks: \n";
-        auto tasks = tasksRepo.getAllTasks();
-
-        for (const auto &task : tasks)
+        if (task.taskData.completed == completed)
         {
-            if (task.taskData.completed)
-            {
-                continue;
-            }
-            std::cout << "--------------------------\n";
-            std::cout << task.getInfo() << '\n';
-            std::cout << "--------------------------\n";
+            _printTaskInfo(task);
         }
-    }
-    else if (input == "2")
-    {
-        std::cout << "Completed tasks: \n";
-        auto tasks = tasksRepo.getAllTasks();
-
-        for (const auto &task : tasks)
-        {
-            if (!(task.taskData.completed))
-            {
-                continue;
-            }
-            std::cout << "--------------------------\n";
-            std::cout << task.getInfo() << '\n';
-            std::cout << "--------------------------\n";
-        }
-    }
-    else if (input == "3")
-    {
-        std::string title;
-        std::string description;
-
-        std::cout << "Enter a title: ";
-        _userInput(title);
-        std::cout << "Enter a description: ";
-        _userInput(description);
-
-        TaskData newTaskData(std::move(title), std::move(description));
-        tasksRepo.addTask(std::move(newTaskData));
-    }
-    else
-    {
-        std::cerr << "Unknown command!\n";
     }
 }
 
-void ConsoleUI::_userInput(std::string &buffer) { std::getline(std::cin, buffer); }
+void ConsoleUI::_printTaskInfo(const ExistingTask& task)
+{
+    std::cout << "--------------------------\n";
+    std::cout << task.getInfo() << '\n';
+    std::cout << "--------------------------\n";
+}
+
+void ConsoleUI::_addANewTask()
+{
+    std::string title;
+    std::string description;
+
+    std::cout << "Enter a title: ";
+    _userInput();
+    title = _inputBuffer;
+
+    std::cout << "Enter a description: ";
+    _userInput();
+    description = _inputBuffer;
+
+    TaskData newTaskData(std::move(title), std::move(description));
+    _tasksRepository->addTask(std::move(newTaskData));
+}
+
+void ConsoleUI::_quit() { std::exit(0); }
+
+void ConsoleUI::_userInput() { std::getline(std::cin, _inputBuffer); }
 
 void ConsoleUI::_printOptions()
 {
-    std::cout << "1 - print all active tasks, 2 - print all completed tasks, 3 - add a new one, 4 "
-                 "- complete task, q - quit\n";
+    std::cout << "1 - print all active tasks, 2 - print all completed tasks,\n"
+              << "3 - add a new one, q - quit\n";
 }

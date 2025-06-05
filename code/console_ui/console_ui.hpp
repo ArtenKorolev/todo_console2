@@ -22,6 +22,7 @@ class ConsoleUI
     void _addANewTask();
     static void _quit();
     void _userInput();
+    void _completeTask();
     static void _printOptions();
 
     std::string _inputBuffer;

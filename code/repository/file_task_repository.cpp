@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <fstream>
+#include <stdexcept>
 #include <vector>
 
 #include "config.hpp"
@@ -43,16 +44,27 @@ void FileTaskRepository::addTask(TaskData&& newTask)
 
 void FileTaskRepository::removeTask(std::uint64_t idToRemove)
 {
-    auto removeIterator =
-        std::find_if(_inMemoryTasks.begin(), _inMemoryTasks.end(),
-                     [idToRemove](const ExistingTask& task) { return task.id == idToRemove; });
+    auto removeIterator = _getTaskById(idToRemove);
+    _inMemoryTasks.erase(removeIterator);
+}
 
-    if (removeIterator == _inMemoryTasks.end())
+void FileTaskRepository::completeTask(std::uint64_t idToComplete)
+{
+    auto taskIterator = _getTaskById(idToComplete);
+    (*taskIterator).taskData.completed = true;
+}
+
+auto FileTaskRepository::_getTaskById(std::uint64_t taskId) -> std::vector<ExistingTask>::iterator
+{
+    auto iterator = std::find_if(_inMemoryTasks.begin(), _inMemoryTasks.end(),
+                                 [taskId](const ExistingTask& task) { return task.id == taskId; });
+
+    if (iterator == _inMemoryTasks.end())
     {
         throw std::runtime_error("Task with given ID not found");
     }
 
-    _inMemoryTasks.erase(removeIterator);
+    return iterator;
 }
 
 [[nodiscard]] auto FileTaskRepository::getAllTasks() const noexcept

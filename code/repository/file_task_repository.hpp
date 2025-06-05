@@ -20,12 +20,14 @@ class FileTaskRepository : public TaskRepository
     void addTask(TaskData&& newTask) override;
     void removeTask(std::uint64_t idToRemove) override;
     [[nodiscard]] auto getAllTasks() const noexcept -> const std::vector<ExistingTask>& override;
+    void completeTask(std::uint64_t idToComplete) override;
 
    private:
     static std::uint64_t _lastId;
     std::vector<ExistingTask> _inMemoryTasks;
 
     void _getLastIdFromTasks() noexcept;
+    [[nodiscard]] auto _getTaskById(std::uint64_t taskId) -> std::vector<ExistingTask>::iterator;
     [[nodiscard]] static auto _getNewId() noexcept -> std::uint64_t;
     void _loadTasksFromFile();
     void _saveTasksToFile() const;

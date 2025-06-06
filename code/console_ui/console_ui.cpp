@@ -14,7 +14,7 @@ void ConsoleUI::run()
 
     _initializeCommands();
 
-    while (true)
+    while (_isRunning)
     {
         _printOptions();
         _userInput();
@@ -82,7 +82,7 @@ void ConsoleUI::_addANewTask()
         _tasksRepository->addTask(std::move(newTaskData));
         std::cout << "New task created successfully!\n";
     }
-    catch (const std::exception &e)
+    catch (const std::exception& e)
     {
         std::cout << "Error while creating a new task: " + std::string(e.what()) << '\n';
     }
@@ -105,7 +105,7 @@ void ConsoleUI::_completeTask()
     }
 }
 
-void ConsoleUI::_quit() { std::exit(0); }
+void ConsoleUI::_quit() { _isRunning = false; }
 
 void ConsoleUI::_userInput() { std::getline(std::cin, _inputBuffer); }
 

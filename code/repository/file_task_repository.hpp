@@ -6,6 +6,8 @@
 #include "task.hpp"
 #include "task_repository.hpp"
 
+using TasksIterator = std::vector<ExistingTask>::iterator;
+
 class FileTaskRepository : public TaskRepository
 {
    public:
@@ -27,7 +29,7 @@ class FileTaskRepository : public TaskRepository
     std::vector<ExistingTask> _inMemoryTasks;
 
     void _getLastIdFromTasks() noexcept;
-    [[nodiscard]] auto _getTaskById(std::uint64_t taskId) -> std::vector<ExistingTask>::iterator;
+    [[nodiscard]] auto _getTaskById(std::uint64_t taskId) -> TasksIterator;
     [[nodiscard]] static auto _getNewId() noexcept -> std::uint64_t;
     void _loadTasksFromFile();
     void _saveTasksToFile() const;

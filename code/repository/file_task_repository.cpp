@@ -54,7 +54,7 @@ void FileTaskRepository::completeTask(std::uint64_t idToComplete)
     (*taskIterator).taskData.completed = true;
 }
 
-auto FileTaskRepository::_getTaskById(std::uint64_t taskId) -> std::vector<ExistingTask>::iterator
+auto FileTaskRepository::_getTaskById(std::uint64_t taskId) -> TasksIterator
 {
     auto iterator = std::find_if(_inMemoryTasks.begin(), _inMemoryTasks.end(),
                                  [taskId](const ExistingTask& task) { return task.id == taskId; });

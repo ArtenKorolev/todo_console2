@@ -3,13 +3,14 @@
 #include <memory>
 
 #include "console_ui.hpp"
-#include "file_task_repository.hpp"
+#include "task_repository_factory.hpp"
 
 auto main() -> int
 {
     try
     {
-        ConsoleUI cli(std::make_unique<FileTaskRepository>());
+        auto tasksRepo = TaskRepositoryFactory::getTaskRepository();
+        ConsoleUI cli(std::move(tasksRepo));
         cli.run();
         return 0;
     }

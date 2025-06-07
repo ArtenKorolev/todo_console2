@@ -5,16 +5,16 @@
 
 #include "task.hpp"
 
-class TaskRepository
+class ITaskRepository
 {
    public:
-    TaskRepository() = default;
-    virtual ~TaskRepository() = default;
+    ITaskRepository() = default;
+    virtual ~ITaskRepository() = default;
 
-    TaskRepository(const TaskRepository&) = delete;
-    auto operator=(const TaskRepository&) -> TaskRepository& = delete;
-    TaskRepository(TaskRepository&&) = delete;
-    auto operator=(TaskRepository&&) -> TaskRepository& = delete;
+    ITaskRepository(const ITaskRepository&) = delete;
+    auto operator=(const ITaskRepository&) -> ITaskRepository& = delete;
+    ITaskRepository(ITaskRepository&&) = delete;
+    auto operator=(ITaskRepository&&) -> ITaskRepository& = delete;
 
     virtual void addTask(TaskData&& newTask) = 0;
     [[nodiscard]] virtual auto getAllTasks() const -> const std::vector<ExistingTask>& = 0;

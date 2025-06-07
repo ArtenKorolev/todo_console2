@@ -3,7 +3,7 @@
 #include <exception>
 #include <iostream>
 
-ConsoleUI::ConsoleUI(std::unique_ptr<TaskRepository> tasksRepository)
+ConsoleUI::ConsoleUI(std::unique_ptr<ITaskRepository> tasksRepository)
     : _tasksRepository(std::move(tasksRepository))
 {
 }

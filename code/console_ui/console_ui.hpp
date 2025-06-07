@@ -12,7 +12,7 @@
 class ConsoleUI
 {
    public:
-    explicit ConsoleUI(std::unique_ptr<TaskRepository> tasksRepository);
+    explicit ConsoleUI(std::unique_ptr<ITaskRepository> tasksRepository);
     void run();
 
    private:
@@ -27,7 +27,7 @@ class ConsoleUI
     static void _printTaskInfo(const ExistingTask& task);
 
     std::string _inputBuffer;
-    std::unique_ptr<TaskRepository> _tasksRepository;
+    std::unique_ptr<ITaskRepository> _tasksRepository;
     std::unordered_map<std::string, std::function<void()>> _commands;
     bool _isRunning = true;
 };

@@ -8,7 +8,7 @@
 
 using TasksIterator = std::vector<ExistingTask>::iterator;
 
-class FileTaskRepository : public TaskRepository
+class FileTaskRepository : public ITaskRepository
 {
    public:
     FileTaskRepository();

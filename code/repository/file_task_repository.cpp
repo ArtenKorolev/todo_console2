@@ -75,7 +75,7 @@ auto FileTaskRepository::_getTaskById(std::uint64_t taskId) -> TasksIterator
 
 void FileTaskRepository::_loadTasksFromFile()
 {
-    std::ifstream file((Config::tasksFilePath));
+    std::ifstream file((config::kTasksFilePath));
 
     if (file.is_open())
     {
@@ -88,7 +88,7 @@ void FileTaskRepository::_loadTasksFromFile()
 
 void FileTaskRepository::_saveTasksToFile() const
 {
-    std::ofstream file(Config::tasksFilePath);
+    std::ofstream file(config::kTasksFilePath);
 
     if (file.is_open())
     {

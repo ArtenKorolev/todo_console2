@@ -42,12 +42,6 @@ void FileTaskRepository::addTask(TaskData&& newTask)
     return ++FileTaskRepository::_lastId;
 }
 
-void FileTaskRepository::removeTask(std::uint64_t idToRemove)
-{
-    auto removeIterator = _getTaskById(idToRemove);
-    _inMemoryTasks.erase(removeIterator);
-}
-
 void FileTaskRepository::completeTask(std::uint64_t idToComplete)
 {
     auto taskIterator = _getTaskById(idToComplete);

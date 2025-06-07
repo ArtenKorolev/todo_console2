@@ -20,7 +20,6 @@ class FileTaskRepository : public TaskRepository
     auto operator=(FileTaskRepository&&) -> FileTaskRepository& = delete;
 
     void addTask(TaskData&& newTask) override;
-    void removeTask(std::uint64_t idToRemove) override;
     [[nodiscard]] auto getAllTasks() const noexcept -> const std::vector<ExistingTask>& override;
     void completeTask(std::uint64_t idToComplete) override;
 

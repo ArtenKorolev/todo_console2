@@ -3,7 +3,9 @@
 
 namespace config
 {
-    constexpr auto kTasksFilePath = "tasks.json";
+
+constexpr auto kTasksFilePath = "tasks.json";
+
 }
 
 #endif  // _CONFIG_HPP_

@@ -7,7 +7,7 @@
 struct TaskData
 {
     TaskData() noexcept = default;
-    explicit TaskData(std::string title, std::string description, bool completed=false);
+    explicit TaskData(std::string title, std::string description, bool completed = false);
 
     std::string title, description;
     bool completed = false;

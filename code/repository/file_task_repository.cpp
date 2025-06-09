@@ -29,7 +29,10 @@ void FileTaskRepository::_getLastIdFromTasks() noexcept
     FileTaskRepository::_lastId = lastId;
 }
 
-FileTaskRepository::~FileTaskRepository() { _saveTasksToFile(); }
+FileTaskRepository::~FileTaskRepository()
+{
+    _saveTasksToFile();  // FIXME: Bad approach to save tasks in destructor, should be fixed later
+}
 
 void FileTaskRepository::addTask(TaskData&& newTask)
 {
@@ -76,7 +79,6 @@ void FileTaskRepository::_loadTasksFromFile()
         json tasksJson;
         file >> tasksJson;
         _inMemoryTasks = tasksJson.get<std::vector<ExistingTask>>();
-        file.close();
     }
 }
 
@@ -88,6 +90,5 @@ void FileTaskRepository::_saveTasksToFile() const
     {
         json tasksJson = _inMemoryTasks;
         file << tasksJson.dump(4);
-        file.close();
     }
 }

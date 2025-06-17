@@ -17,6 +17,18 @@ FileTaskRepository::FileTaskRepository()
     _getLastIdFromTasks();
 }
 
+void FileTaskRepository::_loadTasksFromFile()
+{
+    std::ifstream file((config::kTasksFilePath));
+
+    if (file.is_open())
+    {
+        json tasksJson;
+        file >> tasksJson;
+        _inMemoryTasks = tasksJson.get<std::vector<ExistingTask>>();
+    }
+}
+
 void FileTaskRepository::_getLastIdFromTasks() noexcept
 {
     std::uint64_t lastId = 0;
@@ -32,6 +44,17 @@ void FileTaskRepository::_getLastIdFromTasks() noexcept
 FileTaskRepository::~FileTaskRepository()
 {
     _saveTasksToFile();  // FIXME: Bad approach to save tasks in destructor, should be fixed later
+}
+
+void FileTaskRepository::_saveTasksToFile() const
+{
+    std::ofstream file(config::kTasksFilePath);
+
+    if (file.is_open())
+    {
+        json tasksJson = _inMemoryTasks;
+        file << tasksJson.dump(4);
+    }
 }
 
 void FileTaskRepository::addTask(TaskData&& newTask)
@@ -68,27 +91,4 @@ auto FileTaskRepository::_getTaskById(std::uint64_t taskId) -> TasksIterator
     -> const std::vector<ExistingTask>&
 {
     return _inMemoryTasks;
-}
-
-void FileTaskRepository::_loadTasksFromFile()
-{
-    std::ifstream file((config::kTasksFilePath));
-
-    if (file.is_open())
-    {
-        json tasksJson;
-        file >> tasksJson;
-        _inMemoryTasks = tasksJson.get<std::vector<ExistingTask>>();
-    }
-}
-
-void FileTaskRepository::_saveTasksToFile() const
-{
-    std::ofstream file(config::kTasksFilePath);
-
-    if (file.is_open())
-    {
-        json tasksJson = _inMemoryTasks;
-        file << tasksJson.dump(4);
-    }
 }

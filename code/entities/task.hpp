@@ -18,7 +18,7 @@ struct ExistingTask
     ExistingTask() noexcept = default;
     explicit ExistingTask(std::uint64_t taskId, TaskData taskData);
 
-    auto getInfo() const -> std::string;
+    [[nodiscard]] auto getInfo() const -> std::string;
 
     std::uint64_t id{};
     TaskData taskData;

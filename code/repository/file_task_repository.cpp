@@ -14,31 +14,33 @@ std::uint64_t FileTaskRepository::_lastId = 0;
 FileTaskRepository::FileTaskRepository()
 {
     _loadTasksFromFile();
-    _getLastIdFromTasks();
+    FileTaskRepository::_lastId = _getLastIdFromTasks();
 }
 
 void FileTaskRepository::_loadTasksFromFile()
 {
     std::ifstream file((config::kTasksFilePath));
 
-    if (file.is_open())
+    if (!file.is_open())
     {
-        json tasksJson;
-        file >> tasksJson;
-        _inMemoryTasks = tasksJson.get<std::vector<ExistingTask>>();
+        return;
     }
+
+    json tasksJson;
+    file >> tasksJson;
+    _inMemoryTasks = tasksJson.get<std::vector<ExistingTask>>();
 }
 
-void FileTaskRepository::_getLastIdFromTasks() noexcept
+auto FileTaskRepository::_getLastIdFromTasks() noexcept -> std::uint64_t
 {
     std::uint64_t lastId = 0;
 
     for (const auto& task : _inMemoryTasks)
     {
-        lastId = std::max<uint64_t>(task.id, lastId);
+        lastId = std::max<std::uint64_t>(task.id, lastId);
     }
 
-    FileTaskRepository::_lastId = lastId;
+    return lastId;
 }
 
 FileTaskRepository::~FileTaskRepository()
@@ -50,11 +52,13 @@ void FileTaskRepository::_saveTasksToFile() const
 {
     std::ofstream file(config::kTasksFilePath);
 
-    if (file.is_open())
+    if (!file.is_open())
     {
-        json tasksJson = _inMemoryTasks;
-        file << tasksJson.dump(4);
+        return;
     }
+
+    json tasksJson = _inMemoryTasks;
+    file << tasksJson.dump(4);
 }
 
 void FileTaskRepository::addTask(TaskData&& newTask)

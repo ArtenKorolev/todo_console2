@@ -5,9 +5,8 @@
 
 #include "task_repository.hpp"
 
-class TaskRepositoryFactory
+struct TaskRepositoryFactory
 {
-   public:
     static auto getTaskRepository() -> std::unique_ptr<ITaskRepository>;
 };
 

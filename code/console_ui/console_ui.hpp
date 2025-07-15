@@ -17,6 +17,8 @@ class ConsoleUI
 
    private:
     void _initializeCommands();
+    void _printCompletedTasks();
+    void _printActiveTasks();
     void _printTasks(bool completed);
     void _addANewTask();
     void _userInput();

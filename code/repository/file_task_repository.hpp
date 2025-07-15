@@ -27,7 +27,7 @@ class FileTaskRepository : public ITaskRepository
     static std::uint64_t _lastId;
     std::vector<ExistingTask> _inMemoryTasks;
 
-    void _getLastIdFromTasks() noexcept;
+    auto _getLastIdFromTasks() noexcept -> std::uint64_t;
     [[nodiscard]] auto _getTaskById(std::uint64_t taskId) -> TasksIterator;
     [[nodiscard]] static auto _getNewId() noexcept -> std::uint64_t;
     void _loadTasksFromFile();

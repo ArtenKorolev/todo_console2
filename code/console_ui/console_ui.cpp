@@ -34,12 +34,16 @@ void ConsoleUI::run()
 
 void ConsoleUI::_initializeCommands()
 {
-    _commands = {{"1", [this] { _printTasks(false); }},
-                 {"2", [this] { _printTasks(true); }},
+    _commands = {{"1", [this] { _printCompletedTasks(); }},
+                 {"2", [this] { _printActiveTasks(); }},
                  {"3", [this] { _addANewTask(); }},
                  {"4", [this] { _completeTask(); }},
                  {"q", [this] { _quit(); }}};
 }
+
+void ConsoleUI::_printCompletedTasks() { _printTasks(true); }
+
+void ConsoleUI::_printActiveTasks() { _printTasks(false); }
 
 void ConsoleUI::_printTasks(bool completed)
 {
